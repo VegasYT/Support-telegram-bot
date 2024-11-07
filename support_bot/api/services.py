@@ -8,6 +8,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from .models import Question, Subquestion, Phrase  # Импортируйте ваши модели Django
 
+
 # Путь к папке с моделями
 MODEL_DIR = "models"
 # Создание папки, если она не существует
@@ -20,6 +21,7 @@ os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 
 # Инициализация морфологического анализатора для обработки русского языка
 morph = pymorphy2.MorphAnalyzer()
+
 
 # Функция для конвертации аудиофайлов формата .ogg в .wav
 def convert_to_wav(audio_path):
@@ -137,6 +139,9 @@ def detect_question_and_subquestion(user_message, models):
     question_prediction = question_model.classes_[question_prediction_index]
     question_name = question_map.get(question_prediction, question_prediction)
     question_confidence = question_probas[question_prediction_index]
+
+    print(question_name)
+    print(question_confidence)
     
     # Получаем минимальный коэффициент уверенности для намерения
     min_confidence = Question.objects.get(name=question_name).min_confidence
