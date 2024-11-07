@@ -1,5 +1,5 @@
 import os
-import whisper
+# import whisper
 import numpy as np
 import pymorphy2
 from pydub import AudioSegment
@@ -11,13 +11,12 @@ from .models import Question, Subquestion, Phrase  # Импортируйте в
 
 # Путь к папке с моделями
 MODEL_DIR = "models"
-# Создание папки, если она не существует
 os.makedirs(MODEL_DIR, exist_ok=True)  
 
 # Указание пути к ffmpeg для работы с библиотекой pydub
-ffmpeg_path = r'C:\vs_code\ffmpeg-master-latest-win64-gpl\bin\ffmpeg.exe'
+# ffmpeg_path = r'C:\vs_code\ffmpeg-master-latest-win64-gpl\bin\ffmpeg.exe'
 # Добавление пути к ffmpeg в переменную окружения
-os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
+# os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 
 # Инициализация морфологического анализатора для обработки русского языка
 morph = pymorphy2.MorphAnalyzer()
@@ -110,20 +109,20 @@ def train_models(question_data, subquestion_data):
     return models  # Возвращаем все обученные модели
  
 # Функция для загрузки модели Whisper
-def load_model(model_name):
-    model_path = os.path.join(MODEL_DIR, model_name)  # Определяем путь к модели
-    # Если модель не существует, загружаем и сохраняем её
-    if not os.path.exists(os.path.join(MODEL_DIR, model_name + ".pt")):
-        model = whisper.load_model(model_name)  # Загрузка модели
-        model.save_pretrained(MODEL_DIR)  # Сохранение модели
-    return whisper.load_model(model_name)  # Возвращаем загруженную модель
+# def load_model(model_name):
+#     model_path = os.path.join(MODEL_DIR, model_name)  # Определяем путь к модели
+#     # Если модель не существует, загружаем и сохраняем её
+#     if not os.path.exists(os.path.join(MODEL_DIR, model_name + ".pt")):
+#         model = whisper.load_model(model_name)  # Загрузка модели
+#         model.save_pretrained(MODEL_DIR)  # Сохранение модели
+#     return whisper.load_model(model_name)  # Возвращаем загруженную модель
 
 # Функция для транскрипции аудио
-def transcribe_audio(audio_path):
-    model = load_model("medium")  # Загружаем модель Whisper
-    audio_path = convert_to_wav(audio_path)  # Конвертируем аудио в .wav
-    result = model.transcribe(audio_path, verbose=True, language="ru")  # Транскрибируем аудио
-    return result['text'].strip()  # Возвращаем текст транскрипции
+# def transcribe_audio(audio_path):
+#     model = load_model("medium")  # Загружаем модель Whisper
+#     audio_path = convert_to_wav(audio_path)  # Конвертируем аудио в .wav
+#     result = model.transcribe(audio_path, verbose=True, language="ru")  # Транскрибируем аудио
+#     return result['text'].strip()  # Возвращаем текст транскрипции
 
 # Функция для обнаружения намерения и поднамерения
 def detect_question_and_subquestion(user_message, models):
